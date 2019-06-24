@@ -1,7 +1,18 @@
-document.getElementById("loan-form").addEventListener("submit", calculateResults);
+document.getElementById("loan-form").addEventListener("submit", function(e){
+    
+
+// hide results
+document.querySelector('.results').style.display ="none";
+
+// display loader
+document.querySelector('.loading').style.display ="block";
+
+setTimeout(calculateResults, 2000);
+    e.preventDefault();
+});
 
 // calculate results
-function calculateResults(e){
+function calculateResults(){
 //  Ui variables
 const amount = document.getElementById('amount');
 const interest = document.getElementById('interest');
@@ -23,14 +34,22 @@ if (isFinite(monthly)){
     monthlyPayment.value =monthly.toFixed(2);
     totalPayment.value =(monthly*calculatedPayments).toFixed(2);
     totalInterest.value =((monthly*calculatedPayments)-principal).toFixed(2);
+    document.querySelector('.loading').style.display ="none";
+    document.querySelector('.results').style.display ="block";
 }
 else{
     showError("please check your numbers");
 }
 
-    e.preventDefault();
+  
 }
 function showError(error){
+
+
+
+    document.querySelector('.loading').style.display ="none";
+    document.querySelector('.results').style.display ="none";
+
     const errorDiv = document.createElement('div');
     errorDiv.className ="alert alert-danger";
     // create text node and append to div
